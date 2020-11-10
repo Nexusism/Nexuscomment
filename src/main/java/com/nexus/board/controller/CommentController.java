@@ -1,6 +1,7 @@
 package com.nexus.board.controller;
 
 import com.nexus.board.domain.entity.BoardEntity;
+import com.nexus.board.domain.entity.CommentEntity;
 import com.nexus.board.domain.repository.BoardRepository;
 import com.nexus.board.domain.repository.CommentRepository;
 import com.nexus.board.dto.BoardDto;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.stream.events.Comment;
 import java.util.List;
 
 @AllArgsConstructor
@@ -35,8 +37,18 @@ public class CommentController {
 
     @PostMapping("/post/comment/")
     public String write(CommentDto commentDto) {
+        System.out.println(commentDto);
         commentService.saveComment(commentDto);
+
         return "redirect:/post/" + commentDto.getBoard().getId();
     }
+
+    @DeleteMapping("/post/commentdelete/{cno}")
+    public String delete(@PathVariable("cno") Long cno, BoardDto boardDto){
+        System.out.println(cno);
+        System.out.println(boardDto);
+        commentService.deleteComment(cno);
+        return "redirect:/post/" + boardDto.getId();
+   }
 
 }

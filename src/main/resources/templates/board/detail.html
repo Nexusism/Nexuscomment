@@ -38,6 +38,11 @@
         </td>
         <td>
             <span th:text="${#temporals.format(commentDto.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+            <form  th:action="@{'/post/commentdelete/' + ${commentDto.id}}" method="post">
+                <input type="hidden" name="id" th:value="${boardDto.id}"/>
+                <input type="hidden" name="_method" value="delete"/>
+                <input type="submit" value="삭제">
+            </form>
         </td>
     </tr>
     </form>
@@ -50,6 +55,7 @@
     댓글내용 : <textarea name="content"></textarea><br>
     <input type="submit" value="댓글등록">
 </form>
+
 <!-- 수정/삭제 -->
 <div>
     <a th:href="@{'/post/edit/' + ${boardDto.id}}">
