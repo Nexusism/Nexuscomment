@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" th:href="@{/css/board.css}">
+</head>
+<body>
+
+<h2 th:text="${boardDto.title}"></h2>
+<p th:inline="text">작성일 : [[${#temporals.format(boardDto.createdDate, 'yyyy-MM-dd HH:mm')}]]</p>
+
+<p th:text="${boardDto.content}"></p>
+
+<!-- 댓글 리스트 테이블 -->
+<table>
+    <thead>
+    <tr>
+        <th class="one wide">댓글번호</th>
+        <th class="two wide">작성자</th>
+        <th class="ten wide">내용</th>
+        <th class="three wide">작성일</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <!-- 댓글CONTENTS -->
+    <tr th:each="commentDto : ${commentList}">
+        <td>
+            <span th:text="${commentDto.id}"></span>
+        </td>
+        <td>
+            <span th:text="${commentDto.writer}"></span>
+        </td>
+        <td>
+            <span th:text="${commentDto.content}"></span>
+        </td>
+        <td>
+            <span th:text="${#temporals.format(commentDto.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+        </td>
+    </tr>
+    </form>
+    </tbody>
+</table>
+<!-- 댓글 입력 폼 -->
+<form  action="/post/comment/" method="post">
+    <input type="hidden" name="board" th:value="${boardDto.id}"/>
+    작성자 : <input type="text" name="writer"> <br>
+    댓글내용 : <textarea name="content"></textarea><br>
+    <input type="submit" value="댓글등록">
+</form>
+<!-- 수정/삭제 -->
+<div>
+    <a th:href="@{'/post/edit/' + ${boardDto.id}}">
+        <button>수정</button>
+
+    </a>
+
+    <form id="delete-form" th:action="@{'/post/' + ${boardDto.id}}" method="post">
+        <input type="hidden" name="_method" value="delete"/>
+        <button id="delete-btn">삭제</button>
+
+    </form>
+</div>
+
+<!-- 변수 셋팅 -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var boardDto = /*[[${boardDto}]]*/ "";
+    /*]]>*/
+</script>
+
+<!-- script -->
+<script th:inline="javascript" th:src="@{/js/board.js}"></script>
+</body>
+</html>
