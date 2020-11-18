@@ -18,7 +18,7 @@ public class BoardController {
     private BoardService boardService;
     private CommentService commentService;
 
-    @GetMapping("/")
+    @GetMapping("/list")  // list.html로
     public String list(Model model) {
         List<BoardDto> boardList = boardService.getBoardlist();
         model.addAttribute("boardList", boardList);

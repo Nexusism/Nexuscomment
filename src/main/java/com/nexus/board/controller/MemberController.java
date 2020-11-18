@@ -15,7 +15,7 @@ public class MemberController {
     private MemberRepository member;
 
 
-    @GetMapping("/login")
+    @GetMapping("/")  // 초기화면을 로그인화면으로
     public String login() {
         //  System.out.println(login());
         return "login/login.html";
@@ -27,7 +27,7 @@ public class MemberController {
         System.out.printf("id : {}, pw : {}", inputEmail, inputPassword);
         MemberEntity member = this.member.findByEmailAndPassword(inputEmail, inputPassword);
         if (member != null) {
-            return "login/loginOK.html";
+            return "redirect:/list";
         }
         return "login/loginFail.html";
     }
@@ -40,6 +40,6 @@ public class MemberController {
     @RequestMapping("signUp/create")
     public String create(MemberEntity member){
         this.member.save(member);
-        return "login/login.html";
+        return "redirect:/";
     }
 }
