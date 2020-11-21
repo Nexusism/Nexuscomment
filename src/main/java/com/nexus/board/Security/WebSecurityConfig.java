@@ -1,5 +1,7 @@
 package com.nexus.board.Security;
 
+import com.nexus.board.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,12 +13,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @EnableWebSecurity // 1
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
 
-    private final UserService userService; // 3
+    private UserService userService; // 3
 
     @Bean
     public PasswordEncoder passwordEncoder() { // 4
@@ -39,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
                 .and()
                 .formLogin() // 8
                 .loginPage("/login") // 로그인 페이지 링크
-                .defaultSuccessUrl("/") // 로그인 성공 후 리다이렉트 주소
+                .defaultSuccessUrl("/list") // 로그인 성공 후 리다이렉트 주소
                 .and()
                 .logout() // 9
                 .logoutSuccessUrl("/login") // 로그아웃 성공시 리다이렉트 주소
