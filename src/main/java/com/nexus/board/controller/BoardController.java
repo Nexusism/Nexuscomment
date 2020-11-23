@@ -1,11 +1,13 @@
 package com.nexus.board.controller;
 
+import com.nexus.board.domain.entity.UserInfo;
 import com.nexus.board.dto.BoardDto;
 import com.nexus.board.dto.CommentDto;
 import com.nexus.board.service.BoardService;
 import com.nexus.board.service.CommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +27,8 @@ public class BoardController {
     }
 
     @GetMapping("/list")  // list.html로
-    public String list(Model model) {
+    public String list(@AuthenticationPrincipal UserInfo user, Model model) {
+        System.out.println("username = " + user.getUsername());
         List<BoardDto> boardList = boardService.getBoardlist();
         model.addAttribute("boardList", boardList);
         return "board/list.html";
