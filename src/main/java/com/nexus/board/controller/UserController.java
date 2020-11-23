@@ -25,8 +25,7 @@ public class UserController {
 
     //@GetMapping("/")  // 초기화면을 로그인화면으로
     //public String login() {
-      //  System.out.println(login());
-        //return "board/list.html";
+    //    return "board/list.html";
 
     //}
 

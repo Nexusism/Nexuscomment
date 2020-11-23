@@ -18,6 +18,12 @@ public class BoardController {
     private BoardService boardService;
     private CommentService commentService;
 
+    @GetMapping("/")  // 초기화면을 로그인화면으로
+    public String login() {
+        return "board/list.html";
+
+    }
+
     @GetMapping("/list")  // list.html로
     public String list(Model model) {
         List<BoardDto> boardList = boardService.getBoardlist();
