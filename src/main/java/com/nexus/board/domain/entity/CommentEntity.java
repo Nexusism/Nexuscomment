@@ -19,7 +19,7 @@ public class CommentEntity extends TimeEntity {
     @Column(name = "comment_id")
     private Long id;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 30, nullable = false)
     private String writer;
 
     @Column(columnDefinition = "TEXT", nullable = false)

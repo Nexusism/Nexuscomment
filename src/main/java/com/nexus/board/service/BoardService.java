@@ -1,11 +1,13 @@
 package com.nexus.board.service;
 
 import com.nexus.board.domain.entity.BoardEntity;
+import com.nexus.board.domain.entity.UserInfo;
 import com.nexus.board.domain.repository.BoardRepository;
 import com.nexus.board.dto.BoardDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.SystemException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;

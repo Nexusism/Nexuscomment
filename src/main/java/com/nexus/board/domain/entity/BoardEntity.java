@@ -20,7 +20,7 @@ public class BoardEntity extends TimeEntity {
     @Column(name = "board_id")
     private Long id;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 30, nullable = false)
     private String writer;
 
     @Column(length = 100, nullable = false)

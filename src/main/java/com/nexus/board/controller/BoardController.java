@@ -3,6 +3,7 @@ package com.nexus.board.controller;
 import com.nexus.board.domain.entity.UserInfo;
 import com.nexus.board.dto.BoardDto;
 import com.nexus.board.dto.CommentDto;
+import com.nexus.board.dto.UserInfoDto;
 import com.nexus.board.service.BoardService;
 import com.nexus.board.service.CommentService;
 import lombok.AllArgsConstructor;
@@ -22,8 +23,7 @@ public class BoardController {
 
     @GetMapping("/")  // 초기화면을 로그인화면으로
     public String login() {
-        return "board/list.html";
-
+       return "board/list";
     }
 
     @GetMapping("/list")  // list.html로
@@ -64,16 +64,26 @@ public class BoardController {
     }
 
     @DeleteMapping("/post/{no}")
-    public String delete(@PathVariable("no") Long no) {
+    public String delete(@PathVariable("no") Long no, @AuthenticationPrincipal UserInfo userInfo) {
         boardService.deletePost(no);
 
         return "redirect:/";
     }
 
     @PostMapping("/post")
-    public String write(BoardDto boardDto) {
+    public String write(@AuthenticationPrincipal UserInfo userInfo, BoardDto boardDto) {
+        String username = userInfo.getUsername();
+        System.out.println(username);
+        boardDto.setWriter(username);
         boardService.savePost(boardDto);
-
         return "redirect:/list";
     }
+
+
+//    @PostMapping("/post")
+//    public String write(BoardDto boardDto) {
+//        boardService.savePost(boardDto);
+//
+//        return "redirect:/list";
+//    }
 }
