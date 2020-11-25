@@ -34,7 +34,7 @@ public class UserController {
         System.out.printf("id : {}, pw : {}", inputEmail, inputPassword);
         UserInfo member = this.member.findByEmailAndPassword(inputEmail, inputPassword);
         if (member != null) {
-            return "redirect:/list";
+            return "redirect:/list.html";
         }
         return "login/loginFail.html";
     }

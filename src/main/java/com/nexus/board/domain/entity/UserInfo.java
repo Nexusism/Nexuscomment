@@ -30,7 +30,8 @@ public class UserInfo implements UserDetails {
     private String auth;
 
     @Builder
-    public UserInfo(String email, String password, String auth) {
+    public UserInfo(Long code, String email, String password, String auth) {
+        this.code = code;
         this.email = email;
         this.password = password;
         this.auth = auth;

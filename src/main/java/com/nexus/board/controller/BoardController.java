@@ -21,17 +21,22 @@ public class BoardController {
     private BoardService boardService;
     private CommentService commentService;
 
-    @GetMapping("/")  // 초기화면을 로그인화면으로
+    @GetMapping("/")  // 초기화면을 메인으로할껀데 권한이없어서 로그인창이 출력됨?
     public String login() {
-       return "board/list";
+       return "/login";
     }
+
+    //@GetMapping("/login")  // 로그인 성공 후 리스트로
+    //public String loginOk() {
+    //    return "board/list.html";
+    //}
 
     @GetMapping("/list")  // list.html로
     public String list(@AuthenticationPrincipal UserInfo user, Model model) {
         System.out.println("username = " + user.getUsername());
         List<BoardDto> boardList = boardService.getBoardlist();
         model.addAttribute("boardList", boardList);
-        return "board/list.html";
+        return "board/list";
     }
 
     @GetMapping("/post")
@@ -43,7 +48,7 @@ public class BoardController {
     public String detail(@PathVariable("no") Long no, Model model) {
         BoardDto boardDTO = boardService.getPost(no);
         List<CommentDto> commentDto = commentService.getCommentlist(no);
-        System.out.println(commentDto);
+        //System.out.println(commentDto);
         model.addAttribute("commentList", commentDto);
         model.addAttribute("boardDto", boardDTO);
         return "board/detail.html";
@@ -73,7 +78,7 @@ public class BoardController {
     @PostMapping("/post")
     public String write(@AuthenticationPrincipal UserInfo userInfo, BoardDto boardDto) {
         String username = userInfo.getUsername();
-        System.out.println(username);
+        //System.out.println(username);
         boardDto.setWriter(username);
         boardService.savePost(boardDto);
         return "redirect:/list";

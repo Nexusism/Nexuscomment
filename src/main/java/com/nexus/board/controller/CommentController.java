@@ -7,6 +7,7 @@ import com.nexus.board.domain.repository.BoardRepository;
 import com.nexus.board.domain.repository.CommentRepository;
 import com.nexus.board.dto.BoardDto;
 import com.nexus.board.dto.CommentDto;
+import com.nexus.board.dto.UserInfoDto;
 import com.nexus.board.service.BoardService;
 import com.nexus.board.service.CommentService;
 import lombok.AllArgsConstructor;
@@ -37,7 +38,7 @@ public class CommentController {
     @PostMapping("/post/comment/")
     public String write(@AuthenticationPrincipal UserInfo userInfo, CommentDto commentDto) {
         String username = userInfo.getUsername();
-        System.out.println(commentDto);
+        //System.out.println(commentDto);
         commentDto.setWriter(username);
         commentService.saveComment(commentDto);
 
@@ -45,9 +46,10 @@ public class CommentController {
     }
 
     @DeleteMapping("/post/commentdelete/{cno}")
-    public String delete(@PathVariable("cno") Long cno, BoardDto boardDto){
-        System.out.println(cno);
-        System.out.println(boardDto);
+    public String delete(@PathVariable("cno") Long cno, @AuthenticationPrincipal UserInfoDto userInfoDto, BoardDto boardDto, CommentDto commentDto){
+        //System.out.println(commentDto.getWriter());
+        //System.out.println(cno);
+        //System.out.println(boardDto);
         commentService.deleteComment(cno);
         return "redirect:/post/" + boardDto.getId();
    }

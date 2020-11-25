@@ -59,6 +59,9 @@ public class BoardService {
         return boardRepository.save(boardDto.toEntity()).getId();
     }
 
+    //@Transactional
+    //public String callCommentId(Long id){ return boardRepository.findAllByCommentEntitiesAndWriter(id);}
+
     @Transactional
     public void deletePost(Long id) {
         boardRepository.deleteById(id);

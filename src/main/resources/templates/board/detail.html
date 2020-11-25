@@ -40,7 +40,7 @@
         <td>
             <span th:text="${#temporals.format(commentDto.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
             <form  th:action="@{'/post/commentdelete/' + ${commentDto.id}}" method="post">
-
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 <input type="hidden" name="id" th:value="${boardDto.id}"/>
                 <input type="hidden" name="_method" value="delete"/>
                 <input type="submit" value="삭제">
