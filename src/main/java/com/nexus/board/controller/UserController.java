@@ -47,13 +47,13 @@ public class UserController {
     @PostMapping("/user")
     public String create(UserInfoDto infoDto){
         userService.save(infoDto);
-        return "redirect:/login";
+        return "redirect:/login.html";
     }
 
     // 추가
     @GetMapping(value = "/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
-        return "redirect:/login";
+        return "redirect:/login.html";
     }
 }

@@ -46,11 +46,21 @@ public class CommentController {
     }
 
     @DeleteMapping("/post/commentdelete/{cno}")
-    public String delete(@PathVariable("cno") Long cno, @AuthenticationPrincipal UserInfoDto userInfoDto, BoardDto boardDto, CommentDto commentDto){
+    public String delete(@PathVariable("cno") Long cno, @AuthenticationPrincipal UserInfo userInfo, BoardDto boardDto, CommentDto commentDto){
+        String username = userInfo.getUsername();
+        String cwriter = commentDto.getWriter();
+
+        if(username == cwriter){
+            commentService.deleteComment(cno);
+        }else{
+            return "redirect:/commentdeleteFail.html";
+        }
         //System.out.println(commentDto.getWriter());
-        //System.out.println(cno);
+        System.out.println(commentDto);
+        System.out.println("댓글 작성자 : " + commentDto.getWriter());
+        System.out.println("현재 삭제요청자 : " + userInfo.getUsername());
         //System.out.println(boardDto);
-        commentService.deleteComment(cno);
+        //commentService.deleteComment(cno);
         return "redirect:/post/" + boardDto.getId();
    }
 
