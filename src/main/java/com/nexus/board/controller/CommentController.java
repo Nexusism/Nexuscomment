@@ -35,6 +35,13 @@ public class CommentController {
     //model.addAttribute("commentDtoList", commentDtoList);
     // return "board/detail.html";
     //}
+
+    @GetMapping("/commentdeleteFail/")
+    public String cdeleteFail(){
+        return "redirect:/commentdeleteFail.html";
+    }
+
+
     @PostMapping("/post/comment/")
     public String write(@AuthenticationPrincipal UserInfo userInfo, CommentDto commentDto) {
         String username = userInfo.getUsername();
@@ -49,11 +56,14 @@ public class CommentController {
     public String delete(@PathVariable("cno") Long cno, @AuthenticationPrincipal UserInfo userInfo, BoardDto boardDto, CommentDto commentDto){
         String username = userInfo.getUsername();
         String cwriter = commentDto.getWriter();
-
-        if(username == cwriter){
+        //System.out.println(username);
+        //System.out.println(cwriter);
+        //System.out.println(cno);
+        if(username.equals(cwriter)){
+            System.out.println(cno);
             commentService.deleteComment(cno);
         }else{
-            return "redirect:/commentdeleteFail.html";
+            return "/commentdeleteFail";
         }
         //System.out.println(commentDto.getWriter());
         System.out.println(commentDto);

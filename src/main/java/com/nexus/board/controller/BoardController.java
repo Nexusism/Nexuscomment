@@ -7,6 +7,7 @@ import com.nexus.board.dto.UserInfoDto;
 import com.nexus.board.service.BoardService;
 import com.nexus.board.service.CommentService;
 import lombok.AllArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -61,18 +62,45 @@ public class BoardController {
         return "board/update.html";
     }
 
+    @GetMapping("/boarddeleteFail/")
+    public String bdeleteFail(){
+        return "redirect:/boarddeleteFail.html";
+    }
+
+    @GetMapping("/editFail/")
+    public String beditFail(){
+        return "redirect:/editFail.html";
+    }
+
     @PutMapping("/post/edit/{no}")
-    public String update(BoardDto boardDTO) {
-        boardService.savePost(boardDTO);
+    public String update(@PathVariable("no") Long no, @AuthenticationPrincipal UserInfo userInfo, BoardDto boardDto) {
+        String username = userInfo.getUsername();
+        String bupdate = boardDto.getWriter();
+
+        if(username.equals(bupdate)){
+            boardService.savePost(boardDto);
+        }else{
+            return "/editFail";
+        }
+
 
         return "redirect:/";
     }
 
     @DeleteMapping("/post/{no}")
-    public String delete(@PathVariable("no") Long no, @AuthenticationPrincipal UserInfo userInfo) {
-        boardService.deletePost(no);
+    public String delete(@PathVariable("no") Long no, @AuthenticationPrincipal UserInfo userInfo, BoardDto boardDto){
+        String username = userInfo.getUsername();
+        String bwriter = boardDto.getWriter();
+        System.out.println(username);
+        System.out.println(bwriter);
+        System.out.println(no);
 
-        return "redirect:/";
+        if(username.equals(bwriter)){
+            boardService.deletePost(no);
+        }else{
+            return "/boarddeleteFail";
+        }
+        return "redirect:/list";
     }
 
     @PostMapping("/post")
@@ -83,7 +111,6 @@ public class BoardController {
         boardService.savePost(boardDto);
         return "redirect:/list";
     }
-
 
 //    @PostMapping("/post")
 //    public String write(BoardDto boardDto) {
