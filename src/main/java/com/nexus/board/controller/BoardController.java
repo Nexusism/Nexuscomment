@@ -24,12 +24,12 @@ public class BoardController {
 
     @GetMapping("/")  // 초기화면을 메인으로할껀데 권한이없어서 로그인창이 출력됨?
     public String login() {
-       return "/login";
+       return "redirect:/list";
     }
 
     //@GetMapping("/login")  // 로그인 성공 후 리스트로
     //public String loginOk() {
-    //    return "board/list.html";
+    //    return "redirect:/list";
     //}
 
     @GetMapping("/list")  // list.html로
@@ -56,9 +56,16 @@ public class BoardController {
     }
 
     @GetMapping("/post/edit/{no}")
-    public String edit(@PathVariable("no") Long no, Model model) {
-        BoardDto boardDTO = boardService.getPost(no);
-        model.addAttribute("boardDto", boardDTO);
+    public String edit(@PathVariable("no") Long no, @AuthenticationPrincipal UserInfo userInfo, Model model, BoardDto boardDto) {
+        String username = userInfo.getUsername();
+        String bedit = boardDto.getWriter();
+        if(username.equals(bedit)){
+            boardDto = boardService.getPost(no);
+            model.addAttribute("boardDto", boardDto);
+        }else{
+            return "editFail.html";
+        }
+
         return "board/update.html";
     }
 
@@ -76,8 +83,8 @@ public class BoardController {
     public String update(@PathVariable("no") Long no, @AuthenticationPrincipal UserInfo userInfo, BoardDto boardDto) {
         String username = userInfo.getUsername();
         String bupdate = boardDto.getWriter();
-        System.out.println(username);
-        System.out.println(bupdate);
+        //System.out.println(username);
+        //System.out.println(bupdate);
         if(username.equals(bupdate)){
             boardService.savePost(boardDto);
         }else{
