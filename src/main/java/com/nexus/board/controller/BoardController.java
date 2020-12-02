@@ -72,11 +72,12 @@ public class BoardController {
         return "redirect:/editFail.html";
     }
 
-    @PutMapping("/post/edit/{no}")
+    @PostMapping("/post/edit/{no}")
     public String update(@PathVariable("no") Long no, @AuthenticationPrincipal UserInfo userInfo, BoardDto boardDto) {
         String username = userInfo.getUsername();
         String bupdate = boardDto.getWriter();
-
+        System.out.println(username);
+        System.out.println(bupdate);
         if(username.equals(bupdate)){
             boardService.savePost(boardDto);
         }else{
@@ -91,9 +92,9 @@ public class BoardController {
     public String delete(@PathVariable("no") Long no, @AuthenticationPrincipal UserInfo userInfo, BoardDto boardDto){
         String username = userInfo.getUsername();
         String bwriter = boardDto.getWriter();
-        System.out.println(username);
-        System.out.println(bwriter);
-        System.out.println(no);
+        //System.out.println(username);
+        //System.out.println(bwriter);
+        //System.out.println(no);
 
         if(username.equals(bwriter)){
             boardService.deletePost(no);
