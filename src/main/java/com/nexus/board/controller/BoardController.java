@@ -1,6 +1,7 @@
 package com.nexus.board.controller;
 
 import com.nexus.board.domain.entity.UserInfo;
+import com.nexus.board.domain.repository.LikeRepository;
 import com.nexus.board.dto.BoardDto;
 import com.nexus.board.dto.CommentDto;
 import com.nexus.board.dto.UserInfoDto;
@@ -21,10 +22,12 @@ import java.util.List;
 public class BoardController {
     private BoardService boardService;
     private CommentService commentService;
+    private LikeRepository likeRepository;
+
 
     @GetMapping("/")  // 초기화면을 메인으로할껀데 권한이없어서 로그인창이 출력됨?
     public String login() {
-       return "redirect:/list";
+       return "board/list";
     }
 
     //@GetMapping("/login")  // 로그인 성공 후 리스트로

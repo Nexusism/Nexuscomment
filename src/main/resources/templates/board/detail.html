@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:c="http://www.springframework.org/schema/c">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -12,6 +12,18 @@
 <p th:inline="text">작성일 : [[${#temporals.format(boardDto.createdDate, 'yyyy-MM-dd HH:mm')}]]</p>
 
 <p th:text="${boardDto.content}"></p>
+
+<td>
+    <button type="button" id="likeBtn" class="btn btn-info likeBtn" onclick="updateLike(this);">
+        <c:out value="${result.faqrp_likeCnt}"/>
+    </button>
+</td>
+<td>
+    <button type="button" id="hateBtn" class="btn btn-secondary hateBtn" onclick="updateHate(this);">
+        <c:out value="${result.faqrp_hateCnt}"/>
+    </button>
+</td>
+
 
 <!-- 댓글 리스트 테이블 -->
 <table>

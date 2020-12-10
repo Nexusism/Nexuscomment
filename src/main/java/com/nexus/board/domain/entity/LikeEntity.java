@@ -27,7 +27,7 @@ public class LikeEntity {
     @JoinColumn(name = "code")
     private UserInfo uid;
 
-    @Column(name = "likecheck")
+    @Column(name = "like_check")
     @ColumnDefault("0")
     private Long lcheck;
 
