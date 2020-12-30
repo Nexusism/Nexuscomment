@@ -25,10 +25,7 @@ public class BoardController {
     private LikeRepository likeRepository;
 
 
-    @GetMapping("/")  // 초기화면을 메인으로할껀데 권한이없어서 로그인창이 출력됨?
-    public String login() {
-       return "board/list";
-    }
+
 
     //@GetMapping("/login")  // 로그인 성공 후 리스트로
     //public String loginOk() {

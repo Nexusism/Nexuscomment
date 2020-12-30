@@ -28,6 +28,10 @@ public class UserController {
     //    return "board/list.html";
 
     //}
+    //@GetMapping("/login")  // 초기화면을 메인으로할껀데 권한이없어서 로그인창이 출력됨?
+    //public String login() {
+    //    return "board/list";
+    //}
 
     @PostMapping("/signIn")
     public String signIn(String inputEmail, String inputPassword) {
