@@ -25,19 +25,12 @@ public class BoardController {
     private LikeRepository likeRepository;
 
 
-
-
-    //@GetMapping("/login")  // 로그인 성공 후 리스트로
-    //public String loginOk() {
-    //    return "redirect:/list";
-    //}
-
     @GetMapping("/list")  // list.html로
     public String list(@AuthenticationPrincipal UserInfo user, Model model) {
         System.out.println("username = " + user.getUsername());
         List<BoardDto> boardList = boardService.getBoardlist();
         model.addAttribute("boardList", boardList);
-        return "board/list";
+        return "/main";
     }
 
     @GetMapping("/post")

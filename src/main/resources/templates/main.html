@@ -4,8 +4,12 @@
       xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>main</title>
+
+    <link rel="stylesheet" th:href="@{/css/board.css}">
 </head>
 <body>
+<h1>list</h1> <hr>
+<!-- HEADER -->
 <h2>회원 전용 페이지</h2>
 ID : <span sec:authentication="name"></span> <br>
 소유 권한 : <span sec:authentication="authorities"></span> <br>
@@ -15,5 +19,39 @@ ID : <span sec:authentication="name"></span> <br>
     <input type="submit" value="로그아웃"/>
 </form>
 
+<a th:href="@{/post}">글쓰기</a>
+<table>
+    <thead>
+    <tr>
+        <th class="one wide">번호</th>
+        <th class="one wide">제목</th>
+        <th class="ten wide">작성자</th>
+        <th class="three wide">작성일</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <!-- CONTENTS !-->
+    <tr th:each="board : ${boardList}">
+        <td>
+            <span th:text="${board.id}"></span>
+        </td>
+        <td>
+            <a th:href="@{'/post/' + ${board.id}}">
+                <span th:text="${board.title}"></span>
+            </a>
+        </td>
+        <td>
+            <span th:text="${board.writer}"></span>
+        </td>
+        <td>
+            <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- FOOTER -->
+<div th:insert="common/footer.html" id="footer"></div>
 </body>
 </html>
