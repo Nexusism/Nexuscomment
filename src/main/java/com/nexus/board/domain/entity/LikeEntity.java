@@ -29,6 +29,12 @@ public class LikeEntity {
     @ColumnDefault("0")
     private Long lcheck;
 
+    @Column(name = "like_count")
+    @ColumnDefault("0")
+    private Long likecount;
+
+    @Column(name = "e_mail")
+    private String email;
 
     @Builder
     public LikeEntity(Long lid, BoardEntity bid, UserInfo uid, Long lcheck) {

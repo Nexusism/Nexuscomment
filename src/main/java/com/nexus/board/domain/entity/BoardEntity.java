@@ -29,16 +29,20 @@ public class BoardEntity extends TimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Column(name = "like_count")
+    private Long lcount;
+
       //최종본aaaaaa
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<CommentEntity> commentEntities = new ArrayList<CommentEntity>();
 
     @Builder
-    public BoardEntity(Long id, String title, String content, String writer) {
+    public BoardEntity(Long id, String title, String content, String writer, Long lcount) {
         this.id = id;
         this.writer = writer;
         this.title = title;
         this.content = content;
+        this.lcount = lcount;
     }
 
     public void updates(String title, String content){

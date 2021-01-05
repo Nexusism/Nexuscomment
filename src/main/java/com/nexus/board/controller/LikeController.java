@@ -24,13 +24,17 @@ public class LikeController {
     private BoardRepository boardRepository;
 
     @PostMapping("/post/like/{no}")
-    public String likeCheck(@PathVariable("no") Long no, @AuthenticationPrincipal UserInfo userInfo, BoardDto boardDto, LikeEntity likeEntity){
+    public String likeCheck(@PathVariable("no") BoardEntity no, @AuthenticationPrincipal UserInfo userInfo, BoardDto boardDto, LikeEntity like){
         String username = userInfo.getUsername();
-        Long like = likeEntity.getLcheck();
-        System.out.printf(username);
-        System.out.print(like);
+        like.setBid(no);           //board_id
+        like.setUid(userInfo);     //code
+        like.setLcheck(1L);        //like_check
+        like.setEmail(username);   //e_mail
+        like.setLikecount(1L);     //like_count
 
-        return "redirect:/";
+        likeRepository.save(like);
+
+        return "redirect:/post/{no}";
     }
 
 }

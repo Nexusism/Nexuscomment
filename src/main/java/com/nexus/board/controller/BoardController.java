@@ -25,7 +25,8 @@ public class BoardController {
     private LikeRepository likeRepository;
 
 
-    @GetMapping("/list")  // list.html로
+    //@GetMapping("/list")  // list.html로
+    @GetMapping("/")  // list.html로
     public String list(@AuthenticationPrincipal UserInfo user, Model model) {
         System.out.println("username = " + user.getUsername());
         List<BoardDto> boardList = boardService.getBoardlist();
@@ -101,7 +102,7 @@ public class BoardController {
         }else{
             return "/boarddeleteFail";
         }
-        return "redirect:/list";
+        return "redirect:/";
     }
 
     @PostMapping("/post")
@@ -110,7 +111,7 @@ public class BoardController {
         //System.out.println(username);
         boardDto.setWriter(username);
         boardService.savePost(boardDto);
-        return "redirect:/list";
+        return "redirect:/";
     }
 
 //    @PostMapping("/post")

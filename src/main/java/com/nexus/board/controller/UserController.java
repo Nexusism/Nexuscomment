@@ -25,10 +25,10 @@ public class UserController {
     private UserService userService;
 
 
-    @GetMapping("/")  // 초기화면을 로그인화면으로
-    public String main() {
-        return "redirect:/list";
-    }
+//    @GetMapping("/")  // 초기화면을 로그인화면으로
+//    public String main() {
+//        return "redirect:/list";
+//    }
 //    @GetMapping("/login")  // 초기화면을 메인으로할껀데 권한이없어서 로그인창이 출력됨?
 //    public String login() {
 //        return "/login.html";
@@ -54,7 +54,7 @@ public class UserController {
     @PostMapping("/user")
     public String create(UserInfoDto infoDto){
         userService.save(infoDto);
-        return "redirect:/login.html";
+        return "redirect:/login";
     }
 
     // 추가
