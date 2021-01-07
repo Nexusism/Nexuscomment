@@ -14,7 +14,7 @@ public class BoardDto {
     private String writer;
     private String title;
     private String content;
-    private Long lcount;
+    private Long lcount = 0L;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 

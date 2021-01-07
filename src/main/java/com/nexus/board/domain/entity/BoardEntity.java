@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -30,8 +32,13 @@ public class BoardEntity extends TimeEntity {
     private String content;
 
     @Column(name = "like_count")
+    //@ColumnDefault("0")
     private Long lcount;
 
+//    @PrePersist
+//    public void prePersist() {
+//        this.lcount = this.lcount == null ? 0 : this.lcount;
+//    }
       //최종본aaaaaa
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<CommentEntity> commentEntities = new ArrayList<CommentEntity>();

@@ -7,6 +7,7 @@ import com.nexus.board.domain.repository.BoardRepository;
 import com.nexus.board.domain.repository.LikeRepository;
 import com.nexus.board.domain.repository.UserRepository;
 import com.nexus.board.dto.BoardDto;
+import com.nexus.board.service.BoardService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,16 +23,21 @@ public class LikeController {
     private LikeRepository likeRepository;
     private UserRepository userRepository;
     private BoardRepository boardRepository;
+    private BoardService boardService;
 
     @PostMapping("/post/like/{no}")
-    public String likeCheck(@PathVariable("no") BoardEntity no, @AuthenticationPrincipal UserInfo userInfo, BoardDto boardDto, LikeEntity like){
+    public String likeCheck(@PathVariable("no") BoardEntity no, @AuthenticationPrincipal UserInfo userInfo, LikeEntity like){
+        BoardDto boardDto = boardService.getPost(no.getId());
+        System.out.println(boardDto);
+        Long lc = boardService.plusLcount(boardDto);
+        System.out.println(lc);
         String username = userInfo.getUsername();
         like.setBid(no);           //board_id
         like.setUid(userInfo);     //code
         like.setLcheck(1L);        //like_check
         like.setEmail(username);   //e_mail
-        like.setLikecount(1L);     //like_count
-
+        System.out.println(boardDto);
+        boardService.savePost(boardDto);
         likeRepository.save(like);
 
         return "redirect:/post/{no}";
