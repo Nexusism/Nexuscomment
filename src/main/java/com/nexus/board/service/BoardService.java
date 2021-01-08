@@ -59,10 +59,10 @@ public class BoardService {
     @Transactional
     public Long plusLcount(BoardDto boardDto){
         Long lc = boardDto.getLcount();
-        System.out.printf("현재 lc값 =", lc);
+        //System.out.printf("현재 lc값 =", lc);
         Long plus;
         plus = lc + 1;
-        System.out.printf("plus값 =", plus);
+        //System.out.printf("plus값 =", plus);
         boardDto.setLcount(plus);
 
 

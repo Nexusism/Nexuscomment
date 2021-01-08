@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "liketable")
 public class LikeEntity {
 

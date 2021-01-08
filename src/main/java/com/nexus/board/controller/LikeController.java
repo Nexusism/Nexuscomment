@@ -28,7 +28,13 @@ public class LikeController {
     @PostMapping("/post/like/{no}")
     public String likeCheck(@PathVariable("no") BoardEntity no, @AuthenticationPrincipal UserInfo userInfo, LikeEntity like){
         BoardDto boardDto = boardService.getPost(no.getId());
-        System.out.println(boardDto);
+        System.out.print("LikeController = " + boardDto);
+        System.out.println("LikeLid =" + like.getEmail());
+//        if(like.getBid().getWriter() == no.getWriter()){
+//            return "이미 추천하였습니다.";
+//        }else{
+//
+//        }
         Long lc = boardService.plusLcount(boardDto);
         System.out.println(lc);
         String username = userInfo.getUsername();
@@ -36,7 +42,7 @@ public class LikeController {
         like.setUid(userInfo);     //code
         like.setLcheck(1L);        //like_check
         like.setEmail(username);   //e_mail
-        System.out.println(boardDto);
+        //System.out.println(boardDto);
         boardService.savePost(boardDto);
         likeRepository.save(like);
 
