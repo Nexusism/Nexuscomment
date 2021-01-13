@@ -19,10 +19,18 @@
 
 <tr style="text-align: center">
     <td style="text-align: center">
+<!--        <form  th:action="@{'/post/like/' + ${boardDto.id}}" onclick="if ( confirm('추천하시겠습니까?') == false ) { return false; }"  method="post">-->
+<!--            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+<!--            <input type="hidden" name="id" th:value="${boardDto.id}"/>-->
+<!--            <input type="hidden" name="lid" th:value="${LikeEntity}"/>-->
+
+<!--            <input type="submit" name="like" value="추천하기"/>-->
+<!--        </form>-->
+
         <form  th:action="@{'/post/like/' + ${boardDto.id}}" onclick="if ( confirm('추천하시겠습니까?') == false ) { return false; }"  method="post">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <input type="hidden" name="id" th:value="${boardDto.id}"/>
-<!--            <input type="hidden" name="id" th:value="${LikeEntity.lid}"/>-->
+            <input type="hidden" name="lid" th:value="${LikeEntity}"/>
 
             <input type="submit" name="like" value="추천하기"/>
         </form>

@@ -61,7 +61,7 @@ public class BoardService {
         Long lc = boardDto.getLcount();
         //System.out.printf("현재 lc값 =", lc);
         Long plus;
-        plus = lc + 1;
+        plus =  lc + 1;
         //System.out.printf("plus값 =", plus);
         boardDto.setLcount(plus);
 

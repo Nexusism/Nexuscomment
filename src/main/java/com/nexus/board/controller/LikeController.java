@@ -26,10 +26,11 @@ public class LikeController {
     private BoardService boardService;
 
     @PostMapping("/post/like/{no}")
-    public String likeCheck(@PathVariable("no") BoardEntity no, @AuthenticationPrincipal UserInfo userInfo, LikeEntity like){
-        BoardDto boardDto = boardService.getPost(no.getId());
-        System.out.print("LikeController = " + boardDto);
-        System.out.println("LikeLid =" + like.getEmail());
+    public String likeCheck(@PathVariable("no") LikeEntity no, @AuthenticationPrincipal UserInfo userInfo){
+        BoardDto boardDto = boardService.getPost(no.getBid().getId());
+        System.out.print("LikeBid = " + no.getBid());
+        System.out.println("LikeLid =" + no.getLid());
+
 //        if(like.getBid().getWriter() == no.getWriter()){
 //            return "이미 추천하였습니다.";
 //        }else{
@@ -38,13 +39,13 @@ public class LikeController {
         Long lc = boardService.plusLcount(boardDto);
         System.out.println(lc);
         String username = userInfo.getUsername();
-        like.setBid(no);           //board_id
-        like.setUid(userInfo);     //code
-        like.setLcheck(1L);        //like_check
-        like.setEmail(username);   //e_mail
+        no.setBid(no.getBid());           //board_id
+        no.setUid(userInfo);     //code
+        no.setLcheck(1L);        //like_check
+        no.setEmail(username);   //e_mail
         //System.out.println(boardDto);
         boardService.savePost(boardDto);
-        likeRepository.save(like);
+        likeRepository.save(no);
 
         return "redirect:/post/{no}";
     }
