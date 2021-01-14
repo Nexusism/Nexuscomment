@@ -7,11 +7,14 @@ import com.nexus.board.domain.repository.BoardRepository;
 import com.nexus.board.domain.repository.LikeRepository;
 import com.nexus.board.domain.repository.UserRepository;
 import com.nexus.board.dto.BoardDto;
+import com.nexus.board.dto.LikeDto;
 import com.nexus.board.service.BoardService;
+import com.nexus.board.service.LikeService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -24,28 +27,34 @@ public class LikeController {
     private UserRepository userRepository;
     private BoardRepository boardRepository;
     private BoardService boardService;
+    private LikeService likeService;
 
     @PostMapping("/post/like/{no}")
-    public String likeCheck(@PathVariable("no") LikeEntity no, @AuthenticationPrincipal UserInfo userInfo){
-        BoardDto boardDto = boardService.getPost(no.getBid().getId());
-        System.out.print("LikeBid = " + no.getBid());
-        System.out.println("LikeLid =" + no.getLid());
+    public String likeCheck(@PathVariable("no") Long no, @AuthenticationPrincipal UserInfo userInfo){
+        System.out.print("날라온게 뭐냐 := {" + no + "}");
+        BoardDto boardDto = boardService.getPost(no);
+        LikeDto likeDto = likeService.getLikeT(no); // 새로운 like를 생성해서 넣어야하나?
+        likeDto.setBid();
+        likeDto.setEmail();
+        likeDto.setUid();
+        System.out.print("LikeBid = " + boardDto);
+        System.out.println("LikeLid =" + likeDto);
 
 //        if(like.getBid().getWriter() == no.getWriter()){
 //            return "이미 추천하였습니다.";
 //        }else{
 //
 //        }
-        Long lc = boardService.plusLcount(boardDto);
-        System.out.println(lc);
-        String username = userInfo.getUsername();
-        no.setBid(no.getBid());           //board_id
-        no.setUid(userInfo);     //code
-        no.setLcheck(1L);        //like_check
-        no.setEmail(username);   //e_mail
+        //Long lc = boardService.plusLcount(boardDto);
+        //System.out.println(lc);
+        //String username = userInfo.getUsername();
+        //like.setBid(no.getid());           //board_id
+        //like.setUid(userInfo);     //code
+        //like.setLcheck(1L);        //like_check
+        //like.setEmail(username);   //e_mail
         //System.out.println(boardDto);
-        boardService.savePost(boardDto);
-        likeRepository.save(no);
+        //boardService.savePost(boardDto);
+        //likeService.saveLikeT(likeDto);
 
         return "redirect:/post/{no}";
     }

@@ -7,9 +7,7 @@ import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Setter
 @Entity
-@ToString
 @Table(name = "liketable")
 public class LikeEntity {
 
@@ -38,10 +36,12 @@ public class LikeEntity {
     private String email;
 
     @Builder
-    public LikeEntity(Long lid, BoardEntity bid, UserInfo uid, Long lcheck) {
+    public LikeEntity(Long lid, BoardEntity bid, UserInfo uid, Long lcheck, Long likecount, String email) {
         this.lid = lid;
         this.bid = bid;
         this.uid = uid;
         this.lcheck = lcheck;
+        this.likecount = likecount;
+        this.email = email;
     }
 }
