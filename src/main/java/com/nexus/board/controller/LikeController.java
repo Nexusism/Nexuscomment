@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -30,31 +31,33 @@ public class LikeController {
     private LikeService likeService;
 
     @PostMapping("/post/like/{no}")
-    public String likeCheck(@PathVariable("no") Long no, @AuthenticationPrincipal UserInfo userInfo){
-        System.out.print("날라온게 뭐냐 := {" + no + "}");
-        BoardDto boardDto = boardService.getPost(no);
-        LikeDto likeDto = likeService.getLikeT(no); // 새로운 like를 생성해서 넣어야하나?
-        likeDto.setBid();
-        likeDto.setEmail();
-        likeDto.setUid();
-        System.out.print("LikeBid = " + boardDto);
-        System.out.println("LikeLid =" + likeDto);
+    public String likeCheck(@PathVariable("no") BoardEntity no, @AuthenticationPrincipal UserInfo userInfo){
+        BoardDto boardDto = boardService.getPost(no.getId());
+        //System.out.print("보드엔터티 ID =" + no.getId());
+        //LikeDto like = likeService.getLikeT(no.getId());
+        //System.out.print("BID : = " + likeRepository.findAllByBid(no));
+        //System.out.print("좋아요 리스트 : "+ likeService.getLikelist());
+        //System.out.print("좋아요 : "+ like);
+        LikeDto likeDto = new LikeDto();
+        System.out.print(likeDto.getLcheck());
+        likeDto.setEmail(userInfo.getEmail());
+        likeDto.setUid(userInfo);     //code
+        likeDto.setLcheck(1L);
+        likeDto.setBid(no);
 
-//        if(like.getBid().getWriter() == no.getWriter()){
-//            return "이미 추천하였습니다.";
+//        if(userInfo.getEmail() == likeList.get(Math.toIntExact(no)).getEmail()){
+//            System.out.print("이미 추천하였습니다.");
 //        }else{
+//            likeDto.setEmail(userInfo.getEmail());
 //
 //        }
-        //Long lc = boardService.plusLcount(boardDto);
-        //System.out.println(lc);
-        //String username = userInfo.getUsername();
-        //like.setBid(no.getid());           //board_id
-        //like.setUid(userInfo);     //code
-        //like.setLcheck(1L);        //like_check
-        //like.setEmail(username);   //e_mail
-        //System.out.println(boardDto);
-        //boardService.savePost(boardDto);
-        //likeService.saveLikeT(likeDto);
+//        if(like.getBid().getWriter() == no.getWriter()){
+//            return "이미 추천하였습니다.";
+//        }else{}
+
+        Long lc = boardService.plusLcount(boardDto);
+        boardService.savePost(boardDto);
+        likeService.saveLikeT(likeDto);
 
         return "redirect:/post/{no}";
     }
