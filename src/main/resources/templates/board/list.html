@@ -32,11 +32,13 @@ ID : <span sec:authentication="name"></span> <br>
 
     <tbody>
     <!-- CONTENTS !-->
+    <!--  좋아요 테이블 전달 -->
     <tr th:each="board : ${boardList}">
         <td>
             <span th:text="${board.id}"></span>
         </td>
-        <td>
+        <td><!--  좋아요 테이블 전달 -->
+            <input type="hidden" name="bid" th:value="${LikeEntity.bid}"/>
             <a th:href="@{'/post/' + ${board.id}}">
                 <span th:text="${board.title}"></span>
             </a>

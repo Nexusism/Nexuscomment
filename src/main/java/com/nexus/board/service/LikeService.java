@@ -17,9 +17,10 @@ import java.util.Optional;
 @Service
 public class LikeService {
     private LikeRepository likeRepository;
+    private Long Iterable;
 
     @Transactional
-    public List<LikeDto> getLikelist() {
+    public List<LikeDto> getLikelist(Long id) {
         List<LikeEntity> likeEntities = likeRepository.findAll();
         List<LikeDto> likeDtoList = new ArrayList<>();
 

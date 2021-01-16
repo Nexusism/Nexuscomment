@@ -1,12 +1,15 @@
 package com.nexus.board.controller;
 
+import com.nexus.board.domain.entity.LikeEntity;
 import com.nexus.board.domain.entity.UserInfo;
 import com.nexus.board.domain.repository.LikeRepository;
 import com.nexus.board.dto.BoardDto;
 import com.nexus.board.dto.CommentDto;
+import com.nexus.board.dto.LikeDto;
 import com.nexus.board.dto.UserInfoDto;
 import com.nexus.board.service.BoardService;
 import com.nexus.board.service.CommentService;
+import com.nexus.board.service.LikeService;
 import lombok.AllArgsConstructor;
 import org.apache.catalina.User;
 import org.springframework.data.repository.query.Param;
@@ -23,6 +26,7 @@ public class BoardController {
     private BoardService boardService;
     private CommentService commentService;
     private LikeRepository likeRepository;
+    private LikeService likeService;
 
 
     //@GetMapping("/list")  // list.html로
@@ -40,8 +44,15 @@ public class BoardController {
     }
 
     @GetMapping("/post/{no}")
-    public String detail(@PathVariable("no") Long no, Model model) {
+    public String detail(@PathVariable("no") Long no, Model model, LikeDto likeDto) {
+
+        List<LikeDto> likeDtos = likeService.getLikelist(no);
+        System.out.println("likeDto BID = " + likeDto.getBid());
+        //System.out.println("likeDtos" + likeDtos);
+        //LikeDto likeDto2 = likeService.getLikeT(bid);
+        //System.out.println("likeDto" + likeDto2);
         BoardDto boardDTO = boardService.getPost(no);
+
         List<CommentDto> commentDto = commentService.getCommentlist(no);
         //System.out.println(commentDto);
         model.addAttribute("commentList", commentDto);

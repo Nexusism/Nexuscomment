@@ -44,4 +44,5 @@ public class LikeEntity {
         this.likecount = likecount;
         this.email = email;
     }
+
 }

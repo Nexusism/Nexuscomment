@@ -35,8 +35,9 @@ public class LikeController {
         BoardDto boardDto = boardService.getPost(no.getId());
         //System.out.print("보드엔터티 ID =" + no.getId());
         //LikeDto like = likeService.getLikeT(no.getId());
+        List<LikeDto> like = likeService.getLikelist(no.getId());
         //System.out.print("BID : = " + likeRepository.findAllByBid(no));
-        //System.out.print("좋아요 리스트 : "+ likeService.getLikelist());
+        System.out.print("좋아요 리스트 : "+ like);
         //System.out.print("좋아요 : "+ like);
         LikeDto likeDto = new LikeDto();
         System.out.print(likeDto.getLcheck());
