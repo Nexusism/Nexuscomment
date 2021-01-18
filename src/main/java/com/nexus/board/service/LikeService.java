@@ -17,15 +17,28 @@ import java.util.Optional;
 @Service
 public class LikeService {
     private LikeRepository likeRepository;
-    private Long Iterable;
+
+//    @Transactional
+//    public List<LikeDto> getLikeList(Long id) {
+//        List<LikeEntity> likeEntities = likeRepository.findAll();
+//        return getLikeList(likeEntities);
+//    }
 
     @Transactional
-    public List<LikeDto> getLikelist(Long id) {
-        List<LikeEntity> likeEntities = likeRepository.findAll();
-        List<LikeDto> likeDtoList = new ArrayList<>();
+    public List<LikeDto> getLikeBid(BoardEntity bid) {
+        List<LikeEntity> likes = likeRepository.findByBid(bid);
+        List<LikeDto> likeDtoBid = new ArrayList<>();
 
-        for ( LikeEntity likeEntity : likeEntities) {
-            LikeDto likeDto = LikeDto.builder()
+        if(likes.isEmpty()) return likeDtoBid;
+
+        for(LikeEntity likeEntity : likes){
+            likeDtoBid.add(this.convertEntityToDto(likeEntity));
+        }
+        return likeDtoBid;
+    }
+
+    private LikeDto convertEntityToDto(LikeEntity likeEntity) {
+        return LikeDto.builder()
                     .lid(likeEntity.getLid())
                     .bid(likeEntity.getBid())
                     .uid(likeEntity.getUid())
@@ -33,31 +46,7 @@ public class LikeService {
                     .likecount(likeEntity.getLikecount())
                     .email(likeEntity.getEmail())
                     .build();
-
-            likeDtoList.add(likeDto);
         }
-
-        return likeDtoList;
-    }
-
-//    @Transactional
-//    public List<LikeDto> getLikeT(Long lid) {
-//        List<LikeEntity> likeEntities2 = likeRepository.findById(lid);
-//        List<LikeDto> likeDtoList2 = new ArrayList<>();
-//
-//        for ( LikeEntity likeEntity : likeEntities2) {
-//            LikeDto likeDto = LikeDto.builder()
-//                    .lid(likeEntity.getLid())
-//                    .bid(likeEntity.getBid())
-//                    .uid(likeEntity.getUid())
-//                    .lcheck(likeEntity.getLcheck())
-//                    .likecount(likeEntity.getLikecount())
-//                    .email(likeEntity.getEmail())
-//                    .build();
-//            likeDtoList2.add(likeDto);
-//        }
-//        return likeDtoList2;
-//    }
 
     @Transactional
     public LikeDto getLikeT(Long bid) {

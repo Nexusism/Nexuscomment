@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface LikeRepository extends JpaRepository<LikeEntity, Long> {
     LikeEntity findByLcheck(Long lcheck);
-    List<LikeEntity> findAllByBid();
+    List<LikeEntity> findByBid(BoardEntity bid);
+
 }

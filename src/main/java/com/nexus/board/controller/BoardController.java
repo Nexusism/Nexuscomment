@@ -46,8 +46,8 @@ public class BoardController {
     @GetMapping("/post/{no}")
     public String detail(@PathVariable("no") Long no, Model model, LikeDto likeDto) {
 
-        List<LikeDto> likeDtos = likeService.getLikelist(no);
-        System.out.println("likeDto BID = " + likeDto.getBid());
+        //List<LikeDto> likeDtos = likeService.getLikeList(no);
+        //System.out.println("likeDto BID = " + likeDto.getBid());
         //System.out.println("likeDtos" + likeDtos);
         //LikeDto likeDto2 = likeService.getLikeT(bid);
         //System.out.println("likeDto" + likeDto2);
