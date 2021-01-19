@@ -2,10 +2,13 @@ package com.nexus.board.service;
 
 import com.nexus.board.domain.entity.BoardEntity;
 import com.nexus.board.domain.entity.LikeEntity;
+import com.nexus.board.domain.entity.UserInfo;
 import com.nexus.board.domain.repository.LikeRepository;
 import com.nexus.board.dto.BoardDto;
 import com.nexus.board.dto.LikeDto;
+import com.nexus.board.dto.UserInfoDto;
 import lombok.AllArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -64,6 +67,25 @@ public class LikeService {
 
         return likeDto;
     }
+
+//    @Transactional
+//    public LikeDto findUid(UserInfo uid) {
+//        Optional<LikeEntity> likeEntityWrapper = likeRepository.findByUid(uid);
+//        LikeEntity likeEntity = likeEntityWrapper.get();
+//
+//        LikeDto likeDto = LikeDto.builder()
+//                .lid(likeEntity.getLid())
+//                .bid(likeEntity.getBid())
+//                .uid(likeEntity.getUid())
+//                .lcheck(likeEntity.getLcheck())
+//                .likecount(likeEntity.getLikecount())
+//                .email(likeEntity.getEmail())
+//                .build();
+//
+//        return likeDto;
+//    }
+
+
 
 
     @Transactional
