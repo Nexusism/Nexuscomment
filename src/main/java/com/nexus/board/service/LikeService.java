@@ -7,7 +7,9 @@ import com.nexus.board.domain.repository.LikeRepository;
 import com.nexus.board.dto.BoardDto;
 import com.nexus.board.dto.LikeDto;
 import com.nexus.board.dto.UserInfoDto;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
+//@RequiredArgsConstructor
 @Service
 public class LikeService {
     private LikeRepository likeRepository;
@@ -32,9 +35,9 @@ public class LikeService {
         List<LikeEntity> likes = likeRepository.findByBid(bid);
         List<LikeDto> likeDtoBid = new ArrayList<>();
 
-        if(likes.isEmpty()) return likeDtoBid;
+        if (likes.isEmpty()) return likeDtoBid;
 
-        for(LikeEntity likeEntity : likes){
+        for (LikeEntity likeEntity : likes) {
             likeDtoBid.add(this.convertEntityToDto(likeEntity));
         }
         return likeDtoBid;
@@ -42,14 +45,14 @@ public class LikeService {
 
     private LikeDto convertEntityToDto(LikeEntity likeEntity) {
         return LikeDto.builder()
-                    .lid(likeEntity.getLid())
-                    .bid(likeEntity.getBid())
-                    .uid(likeEntity.getUid())
-                    .lcheck(likeEntity.getLcheck())
-                    .likecount(likeEntity.getLikecount())
-                    .email(likeEntity.getEmail())
-                    .build();
-        }
+                .lid(likeEntity.getLid())
+                .bid(likeEntity.getBid())
+                .uid(likeEntity.getUid())
+                .lcheck(likeEntity.getLcheck())
+                .likecount(likeEntity.getLikecount())
+                .email(likeEntity.getEmail())
+                .build();
+    }
 
     @Transactional
     public LikeDto getLikeT(Long bid) {
@@ -68,22 +71,27 @@ public class LikeService {
         return likeDto;
     }
 
-//    @Transactional
-//    public LikeDto findUid(UserInfo uid) {
-//        Optional<LikeEntity> likeEntityWrapper = likeRepository.findByUid(uid);
-//        LikeEntity likeEntity = likeEntityWrapper.get();
-//
-//        LikeDto likeDto = LikeDto.builder()
-//                .lid(likeEntity.getLid())
-//                .bid(likeEntity.getBid())
-//                .uid(likeEntity.getUid())
-//                .lcheck(likeEntity.getLcheck())
-//                .likecount(likeEntity.getLikecount())
-//                .email(likeEntity.getEmail())
-//                .build();
-//
-//        return likeDto;
-//    }
+    @NotNull
+    @Transactional
+    public LikeDto findUid(Long uid) {
+        LikeEntity likeEntity = likeRepository.findByLcheck(uid);
+        System.out.println("서비스 lceck = " + likeEntity);
+
+
+            LikeDto likeDto = LikeDto.builder()
+                    .lid(likeEntity.getLid())
+                    .bid(likeEntity.getBid())
+                    .uid(likeEntity.getUid())
+                    .lcheck(likeEntity.getLcheck())
+                    .likecount(likeEntity.getLikecount())
+                    .email(likeEntity.getEmail())
+                    .build();
+            return likeDto;
+
+        }
+
+
+
 
 
 

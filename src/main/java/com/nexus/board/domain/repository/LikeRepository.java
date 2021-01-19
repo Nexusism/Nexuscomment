@@ -17,5 +17,6 @@ public interface LikeRepository extends JpaRepository<LikeEntity, Long> {
     LikeEntity findByLcheck(Long lcheck);
     List<LikeEntity> findByBid(BoardEntity bid);
     LikeEntity findAllByUid(Long uid);
+    LikeEntity findByLcheck(UserInfo uid);
 
 }

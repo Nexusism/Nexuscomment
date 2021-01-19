@@ -10,7 +10,9 @@ import com.nexus.board.dto.BoardDto;
 import com.nexus.board.dto.LikeDto;
 import com.nexus.board.service.BoardService;
 import com.nexus.board.service.LikeService;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -22,7 +24,7 @@ import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
-
+//@RequiredArgsConstructor
 public class LikeController {
     private LikeRepository likeRepository;
     private UserRepository userRepository;
@@ -32,12 +34,19 @@ public class LikeController {
 
     @PostMapping("/post/like/{no}")
     public String likeCheck(@PathVariable("no") BoardEntity no, @AuthenticationPrincipal UserInfo userInfo, LikeEntity likeEntity){
-        //BoardDto boardDto = boardService.getPost(no);
+        @NotNull
+        LikeDto lck = likeService.findUid(userInfo.getCode());
+        //List<LikeEntity> likeEntity1 = likeRepository.findAll();
+        //likeEntity = likeRepository.findByLcheck(userInfo.getCode());
+        System.out.println("현재 ID의 Lcheck 여부 " + lck.getLcheck());
+        //likeEntity.getLcheck();
+        //LikeDto likeDto = new LikeDto();
+        //System.out.println(likeRepository.findByLcheck(userInfo.getCode()));
+        //BoardDto boardDto = boardService.getPost(lck.getBid().getId());
         //System.out.print("보드엔터티 ID =" + no.getId());
-        //LikeDto like = likeService.getLikeT(no.getId());
+        //LikeDto like = likeService.findUid(userInfo.getCode());
         //List<LikeDto> like = likeService.getLikeList(no.getId());
         // Like Table의 현재 UserInfo의 id(uid)값을 불러와서 검색을해, 근데 그게 null이면 삽입하고, 중복이면 이미 추천하였습니다.
-        System.out.println("현재 ID의 UID " + userInfo.getCode());
 
         //LikeDto likeDto = likeService.getLikeT(userInfo.getCode());
         //System.out.println("uid 값 = "+likeEntity1);
@@ -45,7 +54,7 @@ public class LikeController {
         //LikeEntity allId = likeRepository.findAllByUid(userInfo.getCode());
         //LikeDto uids = likeService.findUid(userInfo);
         //System.out.print("Uid 리스트 : "+ allId);
-//        if(uid){
+//        if(likeEntity.getLcheck() == null){
 //            LikeDto likeDto = new LikeDto();
 //            System.out.print(likeDto.getLcheck());
 //            likeDto.setEmail(userInfo.getEmail());
@@ -53,8 +62,8 @@ public class LikeController {
 //            likeDto.setLcheck(1L);
 //            likeDto.setBid(no);
 //            likeService.saveLikeT(likeDto);
-//        }else{
-//            System.out.println("이미 추천하셨습니다.");
+//        }else {
+//            System.out.println("이미 추천하였습니다.");
 //        }
         //LikeDto lids = likeService.getLikeT(no.getId());
         //System.out.print("BID : = " + likeRepository.findAllByBid(no));
@@ -85,7 +94,7 @@ public class LikeController {
         //Long lc = boardService.plusLcount(boardDto);
         //boardService.savePost(boardDto);
         //likeService.saveLikeT(likeDto);
-
+        //likeService.saveLikeT(likeDto);
         return "redirect:/post/{no}";
     }
 
