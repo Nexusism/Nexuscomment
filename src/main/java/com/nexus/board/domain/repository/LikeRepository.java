@@ -18,5 +18,6 @@ public interface LikeRepository extends JpaRepository<LikeEntity, Long> {
     List<LikeEntity> findByBid(BoardEntity bid);
     LikeEntity findAllByUid(Long uid);
     LikeEntity findByLcheck(UserInfo uid);
+    Boolean existsByLcheck(Long uid);
 
 }

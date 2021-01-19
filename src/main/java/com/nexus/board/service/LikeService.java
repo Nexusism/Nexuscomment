@@ -74,21 +74,39 @@ public class LikeService {
     @NotNull
     @Transactional
     public LikeDto findUid(Long uid) {
-        LikeEntity likeEntity = likeRepository.findByLcheck(uid);
-        System.out.println("서비스 lceck = " + likeEntity);
-
-
-            LikeDto likeDto = LikeDto.builder()
-                    .lid(likeEntity.getLid())
-                    .bid(likeEntity.getBid())
-                    .uid(likeEntity.getUid())
-                    .lcheck(likeEntity.getLcheck())
-                    .likecount(likeEntity.getLikecount())
-                    .email(likeEntity.getEmail())
+        LikeDto likeDto = new LikeDto();
+        Boolean lcheck = likeRepository.existsByLcheck(uid);
+        System.out.println(lcheck);
+        if (lcheck == false) {
+             likeDto = LikeDto.builder()
+                    .lid(uid.getLid())
+                    .bid(uid.getBid())
+                    .uid(uid.getUid())
+                    .lcheck(uid.getLcheck())
+                    .likecount(uid.getLikecount())
+                    .email(uid.getEmail())
                     .build();
-            return likeDto;
 
+            return likeDto;
+        }else{
+            return likeDto;
         }
+//        }else{
+//        LikeEntity likeEntity = likeRepository.findByLcheck(uid);
+//        System.out.println("서비스 lceck = " + likeEntity);
+//
+//
+//            LikeDto likeDto = LikeDto.builder()
+//                    .lid(likeEntity.getLid())
+//                    .bid(likeEntity.getBid())
+//                    .uid(likeEntity.getUid())
+//                    .lcheck(likeEntity.getLcheck())
+//                    .likecount(likeEntity.getLikecount())
+//                    .email(likeEntity.getEmail())
+//                    .build();
+//            return likeDto;
+
+    }
 
 
 
