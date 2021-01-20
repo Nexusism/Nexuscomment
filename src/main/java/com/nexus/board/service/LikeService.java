@@ -73,22 +73,28 @@ public class LikeService {
 
     @NotNull
     @Transactional
-    public LikeDto findUid(Long uid) {
+    public LikeDto findUid(UserInfo uid) {
+        System.out.println("서비스 uid :" + uid);
         LikeDto likeDto = new LikeDto();
-        Boolean lcheck = likeRepository.existsByLcheck(uid);
+        Boolean lcheck = likeRepository.existsByUid(uid);
         System.out.println(lcheck);
-        if (lcheck == false) {
-             likeDto = LikeDto.builder()
-                    .lid(uid.getLid())
-                    .bid(uid.getBid())
-                    .uid(uid.getUid())
-                    .lcheck(uid.getLcheck())
-                    .likecount(uid.getLikecount())
-                    .email(uid.getEmail())
+        if (!lcheck) {
+            System.out.println(lcheck);
+            LikeEntity likeEntity = likeRepository.findByLcheck(uid);
+            likeDto = LikeDto.builder()
+                    .lid(likeEntity.getLid())
+                    .bid(likeEntity.getBid())
+                    .uid(likeEntity.getUid())
+                    .lcheck(likeEntity.getLcheck())
+                    .likecount(likeEntity.getLikecount())
+                    .email(likeEntity.getEmail())
                     .build();
-
             return likeDto;
+
+
         }else{
+            System.out.println(lcheck);
+            System.out.println("이미 추천하셨습니다.");
             return likeDto;
         }
 //        }else{
@@ -104,7 +110,7 @@ public class LikeService {
 //                    .likecount(likeEntity.getLikecount())
 //                    .email(likeEntity.getEmail())
 //                    .build();
-//            return likeDto;
+            //return likeDto;
 
     }
 

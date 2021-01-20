@@ -35,10 +35,21 @@ public class LikeController {
     @PostMapping("/post/like/{no}")
     public String likeCheck(@PathVariable("no") BoardEntity no, @AuthenticationPrincipal UserInfo userInfo, LikeEntity likeEntity){
 
-        LikeDto lck = likeService.findUid(userInfo.getCode());
+        LikeDto lck = likeService.findUid(userInfo);
         //List<LikeEntity> likeEntity1 = likeRepository.findAll();
         //likeEntity = likeRepository.findByLcheck(userInfo.getCode());
         System.out.println("현재 ID의 Lcheck 여부 " + lck.getLcheck());
+        if(lck.getUid() == null){
+            //LikeDto likeDto = new LikeDto();
+            System.out.print(lck.getLcheck());
+            lck.setEmail(userInfo.getEmail());
+            lck.setUid(userInfo);     //code
+            lck.setLcheck(1L);
+            lck.setBid(no);
+            likeService.saveLikeT(lck);
+        }else{
+            System.out.println("컨트롤러 : 이미 추천");
+        }
         //likeEntity.getLcheck();
         //LikeDto likeDto = new LikeDto();
         //System.out.println(likeRepository.findByLcheck(userInfo.getCode()));
