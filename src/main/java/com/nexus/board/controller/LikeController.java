@@ -34,7 +34,7 @@ public class LikeController {
 
     @PostMapping("/post/like/{no}")
     public String likeCheck(@PathVariable("no") BoardEntity no, @AuthenticationPrincipal UserInfo userInfo, LikeEntity likeEntity){
-
+        Long code = userInfo.getCode();
         LikeDto lck = likeService.findUid(userInfo);
         //List<LikeEntity> likeEntity1 = likeRepository.findAll();
         //likeEntity = likeRepository.findByLcheck(userInfo.getCode());

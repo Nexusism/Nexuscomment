@@ -76,6 +76,7 @@ public class LikeService {
     public LikeDto findUid(UserInfo uid) {
         System.out.println("서비스 uid :" + uid);
         LikeDto likeDto = new LikeDto();
+        System.out.println("새로운 LikeDto 생성");
         Boolean lcheck = likeRepository.existsByUid(uid);
         System.out.println(lcheck);
         if (!lcheck) {
