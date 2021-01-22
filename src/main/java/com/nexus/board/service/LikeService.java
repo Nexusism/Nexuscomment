@@ -70,50 +70,22 @@ public class LikeService {
 
         return likeDto;
     }
-
-    @NotNull
     @Transactional
-    public LikeDto findUid(UserInfo uid) {
-        System.out.println("서비스 uid :" + uid);
-        LikeDto likeDto = new LikeDto();
-        System.out.println("새로운 LikeDto 생성");
-        Boolean lcheck = likeRepository.existsByUid(uid);
-        System.out.println(lcheck);
-        if (!lcheck) {
-            System.out.println(lcheck);
-            LikeEntity likeEntity = likeRepository.findByLcheck(uid);
-            likeDto = LikeDto.builder()
-                    .lid(likeEntity.getLid())
-                    .bid(likeEntity.getBid())
-                    .uid(likeEntity.getUid())
-                    .lcheck(likeEntity.getLcheck())
-                    .likecount(likeEntity.getLikecount())
-                    .email(likeEntity.getEmail())
-                    .build();
-            return likeDto;
-
-
-        }else{
-            System.out.println(lcheck);
-            System.out.println("이미 추천하셨습니다.");
-            return likeDto;
-        }
-//        }else{
-//        LikeEntity likeEntity = likeRepository.findByLcheck(uid);
-//        System.out.println("서비스 lceck = " + likeEntity);
-//
-//
-//            LikeDto likeDto = LikeDto.builder()
-//                    .lid(likeEntity.getLid())
-//                    .bid(likeEntity.getBid())
-//                    .uid(likeEntity.getUid())
-//                    .lcheck(likeEntity.getLcheck())
-//                    .likecount(likeEntity.getLikecount())
-//                    .email(likeEntity.getEmail())
-//                    .build();
-            //return likeDto;
-
+    public Boolean existData(Long uid){
+        System.out.println("서비스로넘어온 유저 id =" + uid);
+        Boolean aBoolean = likeRepository.existsByUid_Code(uid);
+        System.out.println("UID 값은 = " + aBoolean);
+        return aBoolean;
     }
+
+//    @Transactional
+//    public LikeDto findUid(Long uid) {
+//        Boolean bBoolean = existData(uid);
+//        System.out.println("서비스 uid :" + uid);
+//        System.out.println("새로운 LikeDto 생성");
+//        System.out.println("현재 아이디 글 존재여부 : " + bBoolean);
+//        return likeDto;
+//    }
 
 
 
