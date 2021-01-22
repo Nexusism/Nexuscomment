@@ -34,8 +34,27 @@ public class LikeController {
 
     @PostMapping("/post/like/{no}")
     public String likeCheck(@PathVariable("no") BoardEntity no, @AuthenticationPrincipal UserInfo userInfo, LikeEntity likeEntity){
-        Boolean aBoolean = likeService.existData(userInfo.getCode());
+        Boolean aBoolean = likeService.existData(userInfo.getCode(), no, userInfo.getEmail(), userInfo);
         System.out.println("컨트롤러 UID 존재 여부" + aBoolean);
+        LikeDto lck = likeService.findUid(userInfo.getCode(), no, userInfo.getEmail(), userInfo);
+        System.out.println("서비스에서 넘어온 좋아요 데이터 : " + lck);
+        System.out.println("현재 접속자 : " + userInfo.getEmail());
+        System.out.println("좋아요테이블 Email : " + lck.getEmail());
+//        Boolean bBoolean = likeService.existData(lck.getLid());
+//        System.out.println("데이터 존재 여부 :" + bBoolean);
+//        if(bBoolean == true){
+//                System.out.println(lck);
+//                System.out.println("이미 추천하였습니다.");
+//                return "redirect:/";
+//        }else{
+//            System.out.println("추천하였습니다.");
+//            System.out.print(lck.getLcheck());
+//            lck.setEmail(userInfo.getEmail());
+//            lck.setLcheck(1L);
+//            lck.setBid(no);
+//            lck.setUid(userInfo);     //code
+//            likeService.saveLikeT(lck);
+//        }
         //LikeDto lck = likeService.findUid(userInfo.getCode());
         //List<LikeEntity> likeEntity1 = likeRepository.findAll();
         //likeEntity = likeRepository.findByLcheck(userInfo.getCode());

@@ -15,9 +15,11 @@ import java.util.Optional;
 @Repository
 public interface LikeRepository extends JpaRepository<LikeEntity, Long> {
     LikeEntity findByLcheck(Long lcheck);
-    List<LikeEntity> findByBid(BoardEntity bid);
-    LikeEntity findByUid(Long uid);
+    LikeEntity findByBid(BoardEntity bid);
+    LikeEntity findByUid(UserInfo uid);
+    LikeEntity findByUid_Code(Long uid);
+    LikeEntity findByEmailAndBidAndUid_Code(String email, BoardEntity bid, Long uid);
     LikeEntity findByLcheck(UserInfo uid);
-    boolean existsByUid_Code(Long uid);
+    boolean existsByEmailAndBidAndUid_Code(String email, BoardEntity bid, Long uid);
 
 }
