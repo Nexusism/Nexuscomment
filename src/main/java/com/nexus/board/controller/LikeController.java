@@ -33,99 +33,14 @@ public class LikeController {
     private LikeService likeService;
 
     @PostMapping("/post/like/{no}")
-    public String likeCheck(@PathVariable("no") BoardEntity no, @AuthenticationPrincipal UserInfo userInfo, LikeEntity likeEntity){
-        Boolean aBoolean = likeService.existData(userInfo.getCode(), no, userInfo.getEmail(), userInfo);
-        System.out.println("컨트롤러 UID 존재 여부" + aBoolean);
-        LikeDto lck = likeService.findUid(userInfo.getCode(), no, userInfo.getEmail(), userInfo);
-        System.out.println("서비스에서 넘어온 좋아요 데이터 : " + lck);
-        System.out.println("현재 접속자 : " + userInfo.getEmail());
-        System.out.println("좋아요테이블 Email : " + lck.getEmail());
-//        Boolean bBoolean = likeService.existData(lck.getLid());
-//        System.out.println("데이터 존재 여부 :" + bBoolean);
-//        if(bBoolean == true){
-//                System.out.println(lck);
-//                System.out.println("이미 추천하였습니다.");
-//                return "redirect:/";
-//        }else{
-//            System.out.println("추천하였습니다.");
-//            System.out.print(lck.getLcheck());
-//            lck.setEmail(userInfo.getEmail());
-//            lck.setLcheck(1L);
-//            lck.setBid(no);
-//            lck.setUid(userInfo);     //code
-//            likeService.saveLikeT(lck);
-//        }
-        //LikeDto lck = likeService.findUid(userInfo.getCode());
-        //List<LikeEntity> likeEntity1 = likeRepository.findAll();
-        //likeEntity = likeRepository.findByLcheck(userInfo.getCode());
-//        System.out.println("현재 ID의 Lcheck 여부 " + lck.getLcheck());
-//        if(lck.getUid() == null){
-//            //LikeDto likeDto = new LikeDto();
-//            System.out.print(lck.getLcheck());
-//            lck.setEmail(userInfo.getEmail());
-//            lck.setUid(userInfo);     //code
-//            lck.setLcheck(1L);
-//            lck.setBid(no);
-//            likeService.saveLikeT(lck);
-//        }else{
-//            System.out.println("컨트롤러 : 이미 추천");
-//        }
-        //likeEntity.getLcheck();
-        //LikeDto likeDto = new LikeDto();
-        //System.out.println(likeRepository.findByLcheck(userInfo.getCode()));
-        //BoardDto boardDto = boardService.getPost(lck.getBid().getId());
-        //System.out.print("보드엔터티 ID =" + no.getId());
-        //LikeDto like = likeService.findUid(userInfo.getCode());
-        //List<LikeDto> like = likeService.getLikeList(no.getId());
-        // Like Table의 현재 UserInfo의 id(uid)값을 불러와서 검색을해, 근데 그게 null이면 삽입하고, 중복이면 이미 추천하였습니다.
-
-        //LikeDto likeDto = likeService.getLikeT(userInfo.getCode());
-        //System.out.println("uid 값 = "+likeEntity1);
-        //List<LikeDto> likes = likeService.getLikeBid(no);
-        //LikeEntity allId = likeRepository.findAllByUid(userInfo.getCode());
-        //LikeDto uids = likeService.findUid(userInfo);
-        //System.out.print("Uid 리스트 : "+ allId);
-//        if(likeEntity.getLcheck() == null){
-//            LikeDto likeDto = new LikeDto();
-//            System.out.print(likeDto.getLcheck());
-//            likeDto.setEmail(userInfo.getEmail());
-//            likeDto.setUid(userInfo);     //code
-//            likeDto.setLcheck(1L);
-//            likeDto.setBid(no);
-//            likeService.saveLikeT(likeDto);
-//        }else {
-//            System.out.println("이미 추천하였습니다.");
-//        }
-        //LikeDto lids = likeService.getLikeT(no.getId());
-        //System.out.print("BID : = " + likeRepository.findAllByBid(no));
-        //System.out.print("좋아요 리스트 : "+ like);
-
-
-        //System.out.print("좋아요 : "+ like);
-//        if(userInfo.getEmail().equals(likes)) {
-//            return "redirect:/";
-//        }else {
-//            LikeDto likeDto = new LikeDto();
-//            System.out.print(likeDto.getLcheck());
-//            likeDto.setEmail(userInfo.getEmail());
-//            likeDto.setUid(userInfo);     //code
-//            likeDto.setLcheck(1L);
-//            likeDto.setBid(no);
-//        }
-//        if(userInfo.getEmail() == likeList.get(Math.toIntExact(no)).getEmail()){
-//            System.out.print("이미 추천하였습니다.");
-//        }else{
-//            likeDto.setEmail(userInfo.getEmail());
-//
-//        }
-//        if(like.getBid().getWriter() == no.getWriter()){
-//            return "이미 추천하였습니다.";
-//        }else{}
-
-        //Long lc = boardService.plusLcount(boardDto);
-        //boardService.savePost(boardDto);
-        //likeService.saveLikeT(likeDto);
-        //likeService.saveLikeT(likeDto);
+    public String likeCheck(@PathVariable("no") BoardEntity no, @AuthenticationPrincipal UserInfo userInfo, LikeDto likeDto){
+        Long UserId = userInfo.getCode();
+        String UserEmail = userInfo.getEmail();
+        likeDto.setUid(UserId);
+        likeDto.setEmail(UserEmail);
+        likeDto.setBid(no);
+        System.out.println("라이크체크 UID =" + likeDto.getUid());
+        likeService.saveLikeT(likeDto, no, userInfo);
         return "redirect:/post/{no}";
     }
 

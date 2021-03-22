@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class LikeDto {
     private Long lid;
     private BoardEntity bid;
-    private UserInfo uid;
+    private Long uid;
     private Long lcheck;
     private Long likecount;
     private String email;
@@ -33,7 +33,7 @@ public class LikeDto {
     }
 
     @Builder
-    public LikeDto(Long lid, BoardEntity bid, UserInfo uid, Long lcheck, Long likecount, String email) {
+    public LikeDto(Long lid, BoardEntity bid, Long uid, Long lcheck, Long likecount, String email) {
         this.lid = lid;
         this.bid = bid;
         this.uid = uid;

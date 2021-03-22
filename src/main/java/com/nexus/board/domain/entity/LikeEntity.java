@@ -20,9 +20,8 @@ public class LikeEntity {
     @JoinColumn(name = "board_id")
     private BoardEntity bid;
 
-    @OneToOne
-    @JoinColumn(name = "code")
-    private UserInfo uid;
+    @Column(name = "code")
+    private Long uid;
 
     @Column(name = "like_check")
     @ColumnDefault("0")
@@ -36,7 +35,7 @@ public class LikeEntity {
     private String email;
 
     @Builder
-    public LikeEntity(Long lid, BoardEntity bid, UserInfo uid, Long lcheck, Long likecount, String email) {
+    public LikeEntity(Long lid, BoardEntity bid, Long uid, Long lcheck, Long likecount, String email) {
         this.lid = lid;
         this.bid = bid;
         this.uid = uid;

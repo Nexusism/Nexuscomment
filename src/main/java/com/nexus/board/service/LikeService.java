@@ -71,14 +71,14 @@ public class LikeService {
         return likeDto;
     }
 
-    @Transactional
-    public Boolean existData(Long uid, BoardEntity no, String email, UserInfo userInfo) {
-        System.out.println("서비스로넘어온 유저 id =" + uid);
-        System.out.println("서비스 getCode =" + userInfo.getCode());
-        Boolean aBoolean = likeRepository.existsByEmailAndBidAndUid_Code(email, no, userInfo.getCode());
-        System.out.println("UID 값은 = " + aBoolean);
-        return aBoolean;
-    }
+//    @Transactional
+//    public Boolean existData(Long uid, BoardEntity no, String email, UserInfo userInfo) {
+//        System.out.println("서비스로넘어온 유저 id =" + uid);
+//        System.out.println("서비스 getCode =" + userInfo.getCode());
+//        Boolean aBoolean = likeRepository.existsByEmailAndBidAndUid_Code(email, no, userInfo.getCode());
+//        System.out.println("UID 값은 = " + aBoolean);
+//        return aBoolean;
+//    }
 
     @Transactional
     public LikeDto findUid(Long uid, BoardEntity no, String email, UserInfo userInfo) {
@@ -113,7 +113,15 @@ public class LikeService {
     }
 
         @Transactional
-        public Long saveLikeT(LikeDto likeDto){
-            return likeRepository.save(likeDto.toEntity()).getLid();
+        public Long saveLikeT(LikeDto likeDto, BoardEntity no, UserInfo userInfo){
+        LikeEntity likeEntity = likeRepository.findByBid(no);
+        System.out.println("라이크서비스 엔티티 " + likeEntity.getEmail());
+
+
+        likeDto.setLcheck(1L);
+        likeDto.setLikecount(1L);
+            System.out.println("서비스 UID 검색 =" +likeDto);
+            //return likeRepository.save(likeDto.toEntity()).getLid();
+            return null;
         }
     }
