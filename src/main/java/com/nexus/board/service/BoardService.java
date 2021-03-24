@@ -57,18 +57,23 @@ public class BoardService {
     }
 
     @Transactional
-    public Long plusLcount(BoardDto boardDto){
-        Long lc = boardDto.getLcount();
-        //System.out.printf("현재 lc값 =", lc);
-        Long plus;
-        plus =  lc + 1;
-        //System.out.printf("plus값 =", plus);
-        boardDto.setLcount(plus);
+    public BoardDto plusLcount(Long id){
+        Optional<BoardEntity> boardEntityWrapper = boardRepository.findById(id);
+        BoardEntity boardEntity = boardEntityWrapper.get();
 
+        BoardDto boardDto = BoardDto.builder()
+                .id(boardEntity.getId())
+                .title(boardEntity.getTitle())
+                .content(boardEntity.getContent())
+                .writer(boardEntity.getWriter())
+                .lcount(boardEntity.getLcount())
+                .createdDate(boardEntity.getCreatedDate())
+                .build();
 
-        return boardRepository.save(boardDto.toEntity()).getId();
-
+        return boardDto;
+        //return boardRepository.save(boardDto.toEntity()).getId();
     }
+
     @Transactional
     public Long savePost(BoardDto boardDto) {
         return boardRepository.save(boardDto.toEntity()).getId();

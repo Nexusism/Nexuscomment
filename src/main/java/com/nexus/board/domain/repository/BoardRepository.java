@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
+    BoardEntity findById(BoardEntity no);
     //public String findAllByCommentEntitiesAndWriter(Long id);
 
 

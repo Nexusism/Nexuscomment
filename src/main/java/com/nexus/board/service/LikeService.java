@@ -3,6 +3,7 @@ package com.nexus.board.service;
 import com.nexus.board.domain.entity.BoardEntity;
 import com.nexus.board.domain.entity.LikeEntity;
 import com.nexus.board.domain.entity.UserInfo;
+import com.nexus.board.domain.repository.BoardRepository;
 import com.nexus.board.domain.repository.LikeRepository;
 import com.nexus.board.dto.BoardDto;
 import com.nexus.board.dto.LikeDto;
@@ -23,6 +24,7 @@ import java.util.Optional;
 @Service
 public class LikeService {
     private LikeRepository likeRepository;
+    private BoardRepository boardRepository;
 
 //    @Transactional
 //    public List<LikeDto> getLikeList(Long id) {
@@ -114,14 +116,21 @@ public class LikeService {
 
         @Transactional
         public Long saveLikeT(LikeDto likeDto, BoardEntity no, UserInfo userInfo){
-        LikeEntity likeEntity = likeRepository.findByBid(no);
-        System.out.println("라이크서비스 엔티티 " + likeEntity.getEmail());
 
+        Optional<LikeEntity> likeEntity = likeRepository.findByBidAndUid(no, userInfo.getCode());
 
-        likeDto.setLcheck(1L);
-        likeDto.setLikecount(1L);
-            System.out.println("서비스 UID 검색 =" +likeDto);
-            //return likeRepository.save(likeDto.toEntity()).getLid();
-            return null;
+        System.out.println("is Empty " + likeEntity.isEmpty());
+
+        if (likeEntity.isEmpty()){
+            likeDto.setLcheck(1L);
+            likeDto.setLikecount(1L);
+            return likeRepository.save(likeDto.toEntity()).getLid();
+        }else{
+            System.out.println("이미 추천하였습니다.");
+        }
+        //        System.out.println("엔티티 이멜 :"+ likeEntity.get().getEmail());
+        //        System.out.println("엔티티 유저코드 :"+ likeEntity.get().getUid());
+        //        System.out.println("엔티티 BID :"+ likeEntity.get().getBid());
+          return null;
         }
     }
