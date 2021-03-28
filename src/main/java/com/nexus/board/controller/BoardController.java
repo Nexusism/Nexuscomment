@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -45,7 +46,7 @@ public class BoardController {
     }
 
     @GetMapping("/post/{no}")
-    public String detail(@PathVariable("no") Long no, Model model, LikeDto likeDto, UserInfo userInfo) {
+    public String detail(@PathVariable("no") Long no,@PathVariable("no") BoardEntity no2, Model model,@AuthenticationPrincipal UserInfo userInfo) {
 
         //List<LikeDto> likeDtos = likeService.getLikeList(no);
         //System.out.println("likeDto BID = " + likeDto.getBid());
@@ -53,12 +54,21 @@ public class BoardController {
         //LikeDto likeDto2 = likeService.getLikeT(bid);
         //System.out.println("likeDto" + likeDto2);
         BoardDto boardDTO = boardService.getPost(no);
-        //likeDto = likeService.getUserLike(userInfo.getCode(), no, userInfo.getEmail());
+
+        System.out.println("컨트롤러 체크1");
+        //System.out.println("해당 유저 값" + likeRepository.findByBidAndUidAndEmail(no2, userInfo.getCode(), userInfo.getEmail()));
+        LikeDto likeDto = likeService.getUserLike(no, userInfo.getCode() ,userInfo.getEmail());
+
+        System.out.println("보드컨트롤러의 likeDto" + likeDto);
+
+        //System.out.println("엠티 여부 :" + likeDto.toString().isBlank());
+        System.out.println("컨트롤러 체크3");
+
         List<CommentDto> commentDto = commentService.getCommentlist(no);
-        //System.out.println(commentDto);
+        model.addAttribute("likeDto", likeDto);
         model.addAttribute("commentList", commentDto);
         model.addAttribute("boardDto", boardDTO);
-        model.addAttribute("likeDto", likeDto);
+
         return "board/detail.html";
     }
 
