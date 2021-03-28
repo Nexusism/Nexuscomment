@@ -25,6 +25,7 @@ import java.util.Optional;
 public class LikeService {
     private LikeRepository likeRepository;
     private BoardRepository boardRepository;
+    private BoardService boardService;
 
 //    @Transactional
 //    public List<LikeDto> getLikeList(Long id) {
@@ -56,6 +57,22 @@ public class LikeService {
                 .build();
     }
 
+//    @Transactional
+//    public LikeDto getUserLike(Long uid, Long no, String email) {
+//        Optional<LikeEntity> likeEntityWrapper = likeRepository.findByBidAndUidAndEmail(uid, no, email);
+//        LikeEntity likeEntity = likeEntityWrapper.get();
+//
+//        LikeDto likeDto = LikeDto.builder()
+//                .lid(likeEntity.getLid())
+//                .bid(likeEntity.getBid())
+//                .uid(likeEntity.getUid())
+//                .lcheck(likeEntity.getLcheck())
+//                .likecount(likeEntity.getLikecount())
+//                .email(likeEntity.getEmail())
+//                .build();
+//
+//        return likeDto;
+//    }
     @Transactional
     public LikeDto getLikeT(Long bid) {
         Optional<LikeEntity> likeEntityWrapper = likeRepository.findById(bid);
@@ -116,18 +133,28 @@ public class LikeService {
 
         @Transactional
         public Long saveLikeT(LikeDto likeDto, BoardEntity no, UserInfo userInfo){
-
+        BoardDto boardDto = new BoardDto();
+        Long lCount = no.getLcount();
         Optional<LikeEntity> likeEntity = likeRepository.findByBidAndUid(no, userInfo.getCode());
-
         System.out.println("is Empty " + likeEntity.isEmpty());
-
         if (likeEntity.isEmpty()){
+            System.out.println("라이크서비스의 Lcount " + lCount);
+            boardDto.setId(no.getId());
+            boardDto.setLcount(++lCount);
+            boardDto.setWriter(userInfo.getEmail());
+            boardDto.setTitle(no.getTitle());
+            boardDto.setContent(no.getContent());
+            System.out.println("라이크서비스의 boardDto" + boardDto);
+            boardRepository.save(boardDto.toEntity());
+
             likeDto.setLcheck(1L);
             likeDto.setLikecount(1L);
+
             return likeRepository.save(likeDto.toEntity()).getLid();
         }else{
             System.out.println("이미 추천하였습니다.");
         }
+            System.out.println("라이크서비스 로직 후 Dto값 " + likeDto);
         //        System.out.println("엔티티 이멜 :"+ likeEntity.get().getEmail());
         //        System.out.println("엔티티 유저코드 :"+ likeEntity.get().getUid());
         //        System.out.println("엔티티 BID :"+ likeEntity.get().getBid());

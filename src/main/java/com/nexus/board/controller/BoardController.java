@@ -1,5 +1,6 @@
 package com.nexus.board.controller;
 
+import com.nexus.board.domain.entity.BoardEntity;
 import com.nexus.board.domain.entity.LikeEntity;
 import com.nexus.board.domain.entity.UserInfo;
 import com.nexus.board.domain.repository.LikeRepository;
@@ -44,7 +45,7 @@ public class BoardController {
     }
 
     @GetMapping("/post/{no}")
-    public String detail(@PathVariable("no") Long no, Model model, LikeDto likeDto) {
+    public String detail(@PathVariable("no") Long no, Model model, LikeDto likeDto, UserInfo userInfo) {
 
         //List<LikeDto> likeDtos = likeService.getLikeList(no);
         //System.out.println("likeDto BID = " + likeDto.getBid());
@@ -52,11 +53,12 @@ public class BoardController {
         //LikeDto likeDto2 = likeService.getLikeT(bid);
         //System.out.println("likeDto" + likeDto2);
         BoardDto boardDTO = boardService.getPost(no);
-
+        //likeDto = likeService.getUserLike(userInfo.getCode(), no, userInfo.getEmail());
         List<CommentDto> commentDto = commentService.getCommentlist(no);
         //System.out.println(commentDto);
         model.addAttribute("commentList", commentDto);
         model.addAttribute("boardDto", boardDTO);
+        model.addAttribute("likeDto", likeDto);
         return "board/detail.html";
     }
 

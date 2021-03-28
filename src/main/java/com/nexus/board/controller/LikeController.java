@@ -38,20 +38,21 @@ public class LikeController {
     public String likeCheck(@PathVariable("no") BoardEntity no, @AuthenticationPrincipal UserInfo userInfo, LikeDto likeDto, BoardDto boardDto){
         Long UserId = userInfo.getCode();
         String UserEmail = userInfo.getEmail();
-        Optional<BoardEntity> boardEntity = boardRepository.findById(no.getId());
-        System.out.println("보드엔티티 id" + boardEntity.get().getId());
-        System.out.println("보드엔티티 like count" + boardEntity.get().getLcount());
+        //Optional<BoardEntity> boardEntity = boardRepository.findById(no.getId());
+        //System.out.println("보드엔티티 id" + boardEntity.get().getId());
+        //System.out.println("보드엔티티 like count" + boardEntity.get().getLcount());
         likeDto.setUid(UserId);
         likeDto.setEmail(UserEmail);
         likeDto.setBid(no);
 
         System.out.println("라이크체크 UID =" + likeDto.getUid());
         likeService.saveLikeT(likeDto, no, userInfo);
-        boardDto = boardService.plusLcount(no.getId());
-        Long lcount = no.getLcount();
-        boardDto.setLcount(++lcount);
-        boardService.savePost(boardDto);
-        System.out.println("보드 DTO : " + boardService.plusLcount(no.getId()));
+        System.out.println(likeDto.getLcheck());
+//        boardDto = boardService.plusLcount(no.getId());
+//        Long lcount = no.getLcount();
+//        boardDto.setLcount(++lcount);
+//        boardService.savePost(boardDto);
+        //System.out.println("보드 DTO : " + boardService.plusLcount(no.getId()));
         return "redirect:/post/{no}";
     }
 

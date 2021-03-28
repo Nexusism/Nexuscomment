@@ -17,6 +17,7 @@ import java.util.Optional;
 public interface LikeRepository extends JpaRepository<LikeEntity, Long> {
     LikeEntity findByLcheck(Long lcheck);
     Optional<LikeEntity> findByBidAndUid(BoardEntity bid, Long code);
+    Optional<LikeEntity> findByBidAndUidAndEmail(Long code, Long no, String Email);
     LikeEntity findByEmail(BoardDto bid);
 
     //LikeEntity findByUid(UserInfo uid);
