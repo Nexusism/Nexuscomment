@@ -31,9 +31,8 @@
             <span th:if="${likeDto == null}"><form  th:action="@{'/post/like/' + ${boardDto.id}}" onclick="if ( confirm('추천하시겠습니까?') == false ) { return false; }"  method="post">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /><input type="submit" name="like" value="추천하기"/></form></span>
 
-            <span th:unless="${likeDto == null}">
-            <form  th:action="@{'/post/like/' + ${boardDto.id}}" onclick="if ( confirm('추천을 취소하시겠습니까?') == false ) { return false; }"  method="post">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /><input type="submit" name="unlike" value="이미 추천했습니다."/></form></span>
+            <span th:unless="${likeDto == null}"><form  th:action="@{'/post/unlike/' + ${boardDto.id}}" onclick="if ( confirm('추천을 취소하시겠습니까?') == false ) { return false; }"  method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /><input type="submit" name="unlike" value="이미 추천했습니다."/></form></span>
 
 
 

@@ -108,4 +108,16 @@ public class LikeService {
         //        System.out.println("엔티티 BID :"+ likeEntity.get().getBid());
           return null;
         }
+
+    @Transactional
+    public void deleteLike(BoardEntity no, UserInfo userInfo) {
+        Optional<LikeEntity> likeEntity = likeRepository.findByBidAndUid(no, userInfo.getCode());
+        System.out.println("삭제하기위해 찾은 값" + likeEntity.get().getLid());
+        BoardDto boardDto = boardService.getPost(no.getId());
+        Long lcount = boardDto.getLcount();
+        boardDto.setLcount(--lcount);
+        boardRepository.save(boardDto.toEntity());
+        likeRepository.deleteById(likeEntity.get().getLid());
+        System.out.println("딜리트를 날리나?");
+    }
     }
